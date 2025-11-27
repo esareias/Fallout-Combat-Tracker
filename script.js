@@ -2,6 +2,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyCCteaarXhk5VgW5o_WbNsbUXh1jMg1k6c",
   authDomain: "big-apple-wasteland.firebaseapp.com",
+  databaseURL: "https://big-apple-wasteland-default-rtdb.firebaseio.com/",
   projectId: "big-apple-wasteland",
   storageBucket: "big-apple-wasteland.firebasestorage.app",
   messagingSenderId: "1037976504390",
