@@ -49,11 +49,13 @@ function renderTurnOrder(enemies, currentTurnIndex) {
     const card = document.createElement('div');
     const isActive = (index === currentTurnIndex);
     const isPlayer = enemy.style && (enemy.style.includes('player') || enemy.style.includes('friendly'));
+    const isDead = (enemy.hp !== "N/A" && enemy.hp <= 0); // ADD THIS LINE
     
     let cardClass = 'turn-card';
     let cardStyle = '';
     
     if (isActive) cardClass += ' active';
+    if (isDead) cardClass += ' dead'; // ADD THIS LINE
     if (isPlayer) {
       cardClass += ' player';
       cardStyle = `--card-color: ${enemy.token_color || '#0088ff'};`;
