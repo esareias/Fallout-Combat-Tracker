@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  :root {
+    --primary: #00ff41; /* Classic Green default */
+    --bg: #050505;
+    --dark: #001100;
+    --border: #004400;
+    --scanline: rgba(0, 255, 0, 0.05);
+    --glow: 0 0 10px #00ff41;
+    --loot-color: #00b300;
+    --dead-color: #333;
+    --legendary: #ffaa00;
+    --dmg-color: #ff3333;
+    --dice-hit: #fff;
+    --friendly: #0088ff;
+  }
+
+  .theme-amber {
+    --primary: #ffb000; --bg: #1a1000; --dark: #2e1c00; --border: #664400; --scanline: rgba(255, 176, 0, 0.05); --glow: 0 0 10px #ffb000;
+    --loot-color: #ffaa00;
+    --dmg-color: #ffb000;
+  }
+  
+  .theme-red {
+    --primary: #ff3333; --bg: #050000; --dark: #110000; --border: #440000; --scanline: rgba(255, 0, 0, 0.05); --glow: 0 0 10px #ff3333;
+    --loot-color: #cc3333;
+    --dmg-color: #ffaaaa;
+  }
+
+  body { 
+    font-family: 'Courier New', monospace; 
+    background-color: var(--bg); 
+    color: var(--primary); 
+    padding: 20px; 
+    height: 100vh; 
+    overflow: hidden;
+    text-shadow: 0 0 2px var(--border);
+    transition: all 0.5s;
+  }
+  
+  body::before {
+    content: " "; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(var(--scanline) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.06));
+    z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none;
+  }
+
+  .monitor {
+    max-width: 850px; margin: 0 auto; border: 3px solid var(--primary);
+    padding: 20px; background: var(--dark); height: 85vh;
+    display: flex; flex-direction: column;
+    box-shadow: var(--glow), inset 0 0 30px rgba(0,0,0,0.7);
+    border-radius: 15px; position: relative; z-index: 1;
+  }
+
+  .header-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px double var(--primary); padding-bottom: 10px; margin-bottom: 15px;
+  }
+  h3 { margin: 0; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; font-size: 1.2em; }
+  
+  .status-indicator { font-size: 0.7em; opacity: 0.7; margin-left: 10px; }
+
+  .theme-toggle {
+    font-size: 12px; cursor: pointer; border: 1px solid var(--primary); padding: 5px 10px; font-weight: bold;
+  }
+  .theme-toggle:hover { background: var(--primary); color: var(--bg); }
+
+  .control-panel {
+    display: flex; gap: 15px; margin-bottom: 15px;
+    border: 1px dashed var(--primary); padding: 15px; background: rgba(0,0,0,0.2);
+    align-items: flex-end;
+  }
+  
+  .control-row { display: flex; gap: 15px; width: 100%; }
+
+  .input-group { display: flex; flex-direction: column; gap: 5px; flex-grow: 1; }
+  
+  label { font-weight: bold; font-size: 0.8em; text-transform: uppercase; }
+
+  select, input, button {
+    background: transparent; color: var(--primary);
+    border: 1px solid var(--primary); padding: 10px;
+    font-family: 'Courier New', monospace; font-weight: bold;
+    text-transform: uppercase; cursor: pointer; transition: 0.2s;
+  }
+  select:focus, input:focus, button:hover {
+    background: var(--primary); color: var(--bg); outline: none; box-shadow: 0 0 10px var(--primary);
+  }
+  
+  .next-turn-btn {
+    background: var(--primary); color: var(--bg); border: none;
+  }
+  .next-turn-btn:hover { opacity: 0.8; box-shadow: 0 0 15px var(--primary); }
+  
+  .add-manual-btn { border-color: var(--friendly); color: var(--friendly); }
+  .add-manual-btn:hover { background: var(--friendly); color: #000; box-shadow: 0 0 10px var(--friendly); }
+
+  optgroup { background: var(--dark); color: var(--primary); font-style: normal; font-weight: bold; }
+  
+  .player-tokens {
+    display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .player-token {
+    width: 60px; height: 60px; border: 2px solid var(--primary); border-radius: 50%;
+    cursor: pointer; background-size: cover; background-position: center;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+  .player-token:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--primary); }
+  .player-token-label { font-size: 0.6em; text-align: center; margin-top: 5px; color: var(--primary); }
+
+  .d10-btn {
+    width: 60px; height: 60px; 
+    border: 2px solid var(--primary); 
+    border-radius: 10px;
+    cursor: pointer; 
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    font-weight: bold;
+    background: rgba(0,0,0,0.3);
+    margin-right: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    transition: all 0.2s;
+  }
+  .d10-btn:hover { background: var(--primary); color: var(--bg); box-shadow: 0 0 15px var(--primary); }
+  .d10-val { font-size: 1.8em; }
+  .d10-label { font-size: 0.6em; }
+
+  #screen {
+    flex-grow: 1; overflow-y: auto; background: rgba(0,0,0,0.3);
+    padding: 10px; border: 1px solid var(--border); font-size: 14px;
+    position: relative;
+  }
+
+  .enemy-card {
+    border: 1px solid var(--primary); margin-bottom: 10px; padding: 10px;
+    background: rgba(0,0,0,0.2); animation: slideIn 0.3s ease-out;
+    display: flex; flex-direction: column;
+    justify-content: space-between; align-items: flex-start;
+    position: relative;
+    transition: all 0.3s;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    min-height: 80px;
+  }
+
+  .enemy-card.active {
+    border-left: 8px solid #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .enemy-card.legendary { border: 2px solid var(--legendary); box-shadow: 0 0 15px var(--legendary); }
+  .enemy-card.hard { border-left: 5px solid var(--primary); }
+  .enemy-card.weak { opacity: 0.8; border-style: dashed; }
+  
+  .enemy-card.player {
+    border-color: var(--card-color);
+    box-shadow: 0 0 10px var(--card-color);
+    background-color: rgba(0, 136, 255, 0.1);
+  }
+  .enemy-card.player .enemy-name { color: var(--card-color); text-shadow: 0 0 5px var(--card-color); font-size: 1.4em; }
+
+  .enemy-card.dead {
+    border-color: var(--dead-color); opacity: 0.6; filter: grayscale(100%); box-shadow: none;
+  }
+  .enemy-card.dead::after {
+    content: "TERMINATED"; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-10deg);
+    font-size: 3em; font-weight: bold; color: red;
+    border: 4px solid red; padding: 10px; opacity: 0.8; pointer-events: none;
+  }
+
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+  
+  .stat-row { display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px; align-items: center;}
+  .enemy-info { flex-grow: 1; }
+  .enemy-name { font-size: 1.2em; font-weight: bold; display: block; margin-bottom: 5px; text-shadow: 2px 2px 0px #000; }
+  .enemy-stats { font-size: 0.9em; opacity: 0.9; margin-top: 5px; display: block; text-shadow: 1px 1px 0px #000; }
+  
+  .stat-box { display: inline-flex; align-items: center; margin-right: 15px; gap: 5px; background: rgba(0,0,0,0.6); padding: 2px; border-radius: 3px;}
+  .stat-input { 
+    background: transparent; color: inherit; border: 1px solid var(--primary); 
+    width: 60px; font-family: inherit; font-weight: bold; padding: 2px; font-size: 1em; text-align: center;
+  }
+  .stat-input:focus { outline: none; background: rgba(255,255,255,0.1); }
+  
+  .action-btn {
+    border: 1px solid var(--primary); color: var(--primary); background: #000;
+    padding: 4px 8px; font-weight: bold; cursor: pointer; font-size: 0.9em; margin-left: 5px; text-transform: uppercase;
+  }
+  .action-btn:hover { background: var(--primary); color: var(--bg); }
+  
+  .kill-btn { border-color: #ff4444; color: #ff4444; font-size: 1.1em; padding: 2px 8px; background: #000; }
+  .kill-btn:hover { background: #ff4444; color: black; }
+
+  .loot-box {
+    margin-top: 10px; padding: 5px 10px; border: 1px dashed var(--border);
+    background: rgba(0,0,0,0.8); width: 96%;
+    color: var(--loot-color); font-size: 0.9em;
+  }
+  .loot-header { font-weight: bold; text-decoration: underline; margin-bottom: 3px; display: block;}
+  .loot-item { margin-right: 10px; color: #fff; }
+  .loot-cap { color: #f2e22c; }
+
+  .combat-log {
+    margin-top: 10px; padding: 8px; border: 1px solid var(--primary);
+    background: rgba(0, 0, 0, 0.9); width: 96%;
+    color: #fff; font-size: 0.9em; font-family: monospace;
+  }
+  .dice-roll { color: #aaa; }
+  .dice-hit { color: var(--dmg-color); font-weight: bold; }
+  .dice-crit { color: #fff; font-weight: bold; text-shadow: 0 0 5px var(--dmg-color); }
+  .dmg-total { color: var(--primary); font-size: 1.2em; font-weight: bold; float: right; }
+
+  .icon { width: 20px; height: 20px; fill: currentColor; vertical-align: middle; }
+  
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--primary); border: 1px solid var(--dark); }
+
+  #input-overlay {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: var(--dark); border: 2px solid var(--friendly);
+      padding: 20px; width: 300px; z-index: 100; box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      display: none; flex-direction: column; gap: 10px;
+  }
+  #input-overlay h4 { margin: 0 0 10px 0; color: var(--friendly); text-align: center; }
+  #input-overlay input { width: 90%; border-color: var(--friendly); margin: 0 auto; }
+  #input-overlay button { border-color: var(--friendly); color: var(--friendly); width: 100%; }
+  #input-overlay button:hover { background: var(--friendly); color: black; }
+</style>
+</head>
+<body>
+
+<svg style="display: none;">
+  <symbol id="icon-target" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-4-8c.01 0 .01 0 0 0 2.21 0 4 1.79 4 4 0 .01 0 .01 0 0 0-2.21 1.79-4 4-4-.01 0-.01 0 0 0-2.21 0-4-1.79-4-4 0-.01 0-.01 0 0 0 2.21-1.79 4-4 4z"/></symbol>
+  <symbol id="icon-clear" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+  <symbol id="icon-next" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></symbol>
+  <symbol id="icon-add" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></symbol>
+</svg>
+
+<div class="monitor">
+  <div class="header-bar">
+    <h3><svg class="icon"><use href="#icon-target"></use></svg> DM CONTROL V30.5 <span id="connStatus" class="status-indicator">[LOCAL MODE]</span></h3>
+    <span class="theme-toggle" onclick="cycleTheme()">[ TOGGLE THEME ]</span>
+  </div>
+  
+  <div class="control-panel" style="flex-direction:column; gap:10px;">
+    
+    <div style="text-align: center; font-size:0.8em; color:var(--friendly);">
+        PLAYER QUICK-ADD: Click Token to Add
+    </div>
+    <div class="player-tokens" id="playerTokenPanel">
+    </div>
+
+    <div class="control-row">
+      <div class="input-group" style="flex: 2;">
+        <label>HOSTILE SPAWN</label>
+        <select id="enemyType">
+        <optgroup label=">> GHOULS & ABOMINATIONS (Visual: Ghoul)">
+          <option value="Feral Ghoul">Feral Ghoul</option>
+          <option value="Feral Ghoul Roamer">Feral Ghoul Roamer</option>
+          <option value="Glowing One">Glowing One</option>
+          <option value="Reaver">Ghoul Reaver</option>
+          <option value="Chinese Remnant">Chinese Remnant Ghoul</option>
+          <option value="Trog">Trog</option>
+          <option value="Alien">Alien (Zetan)</option>
+        </optgroup>
+        <optgroup label=">> SUPER MUTANTS (Visual: Super Mutant)">
+          <option value="Super Mutant">Super Mutant</option>
+          <option value="Super Mutant Brute">Super Mutant Brute</option>
+          <option value="Super Mutant Master">Super Mutant Master</option>
+          <option value="Behemoth">Super Mutant Behemoth</option>
+          <option value="Nightkin">Nightkin</option>
+        </optgroup>
+        <optgroup label=">> RAIDERS & GANGS (Visual: Raider)">
+          <option value="Raider">Raider / Gang Member</option>
+          <option value="Cannibal">Cannibal / Mad Man</option>
+          <option value="Slaver">Slaver</option>
+          <option value="Heretic">Heretic (Renegade)</option>
+          <option value="Blightfire Fuse">Blightfire Fuse</option>
+          <option value="Blightfire Decanus">Blightfire Decanus</option>
+          <option value="Blightfire Pyro">Blightfire Pyro</option>
+        </optgroup>
+        <optgroup label=">> MILITARY & MERCENARIES (Visual: Elite Human)">
+          <option value="NCR Remnant">NCR Remnant</option>
+          <option value="NCR Ranger Exile">NCR Ranger Exile</option>
+          <option value="Headhunter">Headhunter Merc</option>
+          <option value="Wolfe Merc">Wolfe Company Merc</option>
+          <option value="Scout Trooper">Williamsport Scout</option>
+          <option value="Big Apple Ranger">Big Apple Ranger</option>
+          <option value="Hitman">Hitman / Lawman</option>
+          <option value="Slag">Slag</option>
+        </optgroup>
+        <optgroup label=">> POWER ARMOR UNITS (Visual: Power Armor)">
+          <option value="BoS Squad">BoS Squad</option>
+          <option value="Enclave Remnant">Enclave Remnant</option>
+        </optgroup>
+        <optgroup label=">> ROBOTS: SECURITY (Visual: Robot Guard)">
+          <option value="Protectron">Protectron</option>
+          <option value="Protect-O-Bot">Protect-O-Bot</option>
+          <option value="Securitron Mk I">Securitron Mk I</option>
+          <option value="Oculobot">Oculobot</option>
+        </optgroup>
+        <optgroup label=">> ROBOTS: MILITARY (Visual: Robot Heavy)">
+          <option value="Mr Handy">Mr. Handy</option>
+          <option value="Mr Gutsy">Mr. Gutsy</option>
+          <option value="Sentry Bot">Sentry Bot</option>
+          <option value="Roboscorpion">Roboscorpion</option>
+          <option value="Turret">Automated Turret</option>
+          <option value="Securitron Mk II">Securitron Mk II</option>
+        </optgroup>
+        <optgroup label=">> INSECTS (Visual: Insect)">
+          <option value="Radroach">Radroach</option>
+          <option value="Bloatfly">Bloatfly</option>
+          <option value="Giant Ant">Giant Ant</option>
+          <option value="Fire Ant">Fire Ant</option>
+          <option value="Giant Mantid">Giant Mantid</option>
+          <option value="Cazador">Cazador</option>
+          <option value="Scythewing">Scythewing</option>
+        </optgroup>
+        <optgroup label=">> DEATHCLAWS (Visual: Deathclaw)">
+          <option value="Deathclaw">Deathclaw</option>
+        </optgroup>
+        <optgroup label=">> WILDLIFE & MUTANTS (Visual: Mutant Wild)">
+          <option value="Mole Rat">Mole Rat</option>
+          <option value="Pig Rat">Pig Rat</option>
+          <option value="Vicious Dog">Vicious Dog</option>
+          <option value="Radscorpion">Radscorpion</option>
+          <option value="Mirelurk">Mirelurk</option>
+          <option value="Moray Eel">Moray Eel</option>
+          <option value="Centaur">Centaur</option>
+          <option value="Yao Guai">Yao Guai</option>
+          <option value="Guai Wu">Guai Wu</option>
+          <option value="Nightstalker">Nightstalker</option>
+          <option value="Spore Carrier">Spore Carrier</option>
+          <option value="Spore Plant">Spore Plant</option>
+          <option value="Tunneler">Tunneler</option>
+          <option value="Gecko">Gecko</option>
+          <option value="Golden Gecko">Golden Gecko</option>
+          <option value="Fire Gecko">Fire Gecko</option>
+          <option value="Brahmin">Brahmin</option>
+        </optgroup>
+        </select>
+      </div>
+      <div class="input-group" style="flex: 1;">
+        <label>MODIFIER</label>
+        <select id="difficulty">
+          <option value="1">Standard (1x)</option>
+          <option value="0.75">Weak (0.75x)</option>
+          <option value="1.5">Hard (1.5x)</option>
+          <option value="2.0">Legendary (2x)</option>
+        </select>
+      </div>
+      <div class="input-group" style="flex: 0.5;">
+        <label>QTY</label>
+        <input type="number" id="count" value="1" min="1" max="10">
+      </div>
+      <button onclick="spawnEnemies()">SPAWN</button>
+    </div>
+
+    <div class="control-row" style="border-top: 1px dotted var(--border); padding-top: 10px;">
+      <div class="input-group" style="flex: 2;">
+        <label style="color: var(--friendly);">MANUAL ENTRY / NPC</label>
+        <input type="text" id="manualName" placeholder="Name (e.g. Doc Johnson)">
+      </div>
+      <div class="input-group" style="flex: 1;">
+        <label style="color: var(--friendly);">SEQ</label>
+        <input type="number" id="manualSeq" placeholder="Init.">
+      </div>
+      <button class="add-manual-btn" onclick="addManual()">ADD NPC</button>
+    </div>
+    
+    <div class="control-row" style="justify-content: center; margin-top: 5px;">
+       <button class="next-turn-btn" onclick="advanceTurn()">NEXT TURN <svg class="icon"><use href="#icon-next"></use></svg></button>
+       <button onclick="clearRadar()" style="border-color: inherit; opacity: 0.7;"><svg class="icon"><use href="#icon-clear"></use></svg> PURGE ALL</button>
+    </div>
+  </div>
+
+  <div id="screen">
+    <div style="text-align: center; opacity: 0.5; margin-top: 50px;">NO HOSTILES DETECTED</div>
+    
+    <div id="input-overlay">
+        <h4 id="input-title">ADD CHARACTER</h4>
+        <input type="number" id="input-hp" placeholder="Starting HP">
+        <input type="text" id="input-dr" placeholder="DR (e.g. 2)">
+        <input type="number" id="input-seq" placeholder="Sequence (Init)">
+        <button id="input-confirm">CONFIRM</button>
+        <button onclick="closeInput()" style="border-color: #555; color: #777;">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
