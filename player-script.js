@@ -71,10 +71,19 @@ function renderTurnOrder(enemies, currentTurnIndex) {
       statsHTML += `<span class="stat-item">DR: ${enemy.dr}</span>`;
     }
     
+    // Build icon if available
+    let iconHTML = '';
+    if (enemy.token_src) {
+      iconHTML = `<div class="char-icon" style="background-image: url(${enemy.token_src});"></div>`;
+    }
+    
     card.innerHTML = `
       <div class="turn-number">#${index + 1}</div>
-      <div class="char-name ${isPlayer ? 'player-name' : ''}">${enemy.name}</div>
-      <div class="stats">${statsHTML}</div>
+      ${iconHTML}
+      <div class="char-info">
+        <div class="char-name ${isPlayer ? 'player-name' : ''}">${enemy.name}</div>
+        <div class="stats">${statsHTML}</div>
+      </div>
     `;
     
     turnOrderDiv.appendChild(card);
