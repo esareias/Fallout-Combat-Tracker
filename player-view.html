@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  :root {
+    --primary: #00ff41;
+    --bg: #050505;
+    --dark: #001100;
+    --border: #004400;
+    --scanline: rgba(0, 255, 0, 0.05);
+    --glow: 0 0 10px #00ff41;
+  }
+
+  body { 
+    font-family: 'Courier New', monospace; 
+    background-color: var(--bg); 
+    color: var(--primary); 
+    padding: 20px; 
+    min-height: 100vh;
+    text-shadow: 0 0 2px var(--border);
+  }
+  
+  body::before {
+    content: " "; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(var(--scanline) 50%, rgba(0, 0, 0, 0.25) 50%);
+    z-index: 2; background-size: 100% 2px; pointer-events: none;
+  }
+
+  .monitor {
+    max-width: 700px; margin: 0 auto; border: 3px solid var(--primary);
+    padding: 20px; background: var(--dark);
+    box-shadow: var(--glow), inset 0 0 30px rgba(0,0,0,0.7);
+    border-radius: 15px; position: relative; z-index: 1;
+  }
+
+  .header {
+    text-align: center; border-bottom: 2px double var(--primary); 
+    padding-bottom: 15px; margin-bottom: 20px;
+  }
+  
+  h2 { margin: 0; letter-spacing: 3px; font-size: 1.5em; }
+  .status { font-size: 0.8em; opacity: 0.7; margin-top: 5px; }
+
+  .turn-card {
+    border: 1px solid var(--primary); margin-bottom: 10px; padding: 15px;
+    background: rgba(0,0,0,0.3); position: relative;
+    transition: all 0.3s;
+  }
+
+  .turn-card.active {
+    border-left: 8px solid #fff;
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  .turn-card.player {
+    border-color: var(--card-color);
+    box-shadow: 0 0 10px var(--card-color);
+    background-color: rgba(0, 136, 255, 0.1);
+  }
+
+  .turn-number {
+    position: absolute; top: 10px; right: 10px;
+    font-size: 2em; opacity: 0.3; font-weight: bold;
+  }
+
+  .char-name {
+    font-size: 1.3em; font-weight: bold; margin-bottom: 10px;
+    text-shadow: 2px 2px 0px #000;
+  }
+
+  .char-name.player-name {
+    color: var(--card-color);
+    text-shadow: 0 0 5px var(--card-color);
+  }
+
+  .stats {
+    font-size: 0.95em; opacity: 0.9;
+  }
+
+  .stat-item {
+    display: inline-block; margin-right: 15px;
+    background: rgba(0,0,0,0.6); padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  .empty-state {
+    text-align: center; opacity: 0.5; 
+    margin-top: 100px; font-size: 1.2em;
+  }
+
+  .current-turn-banner {
+    background: var(--primary);
+    color: var(--bg);
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px var(--primary);
+  }
+</style>
+</head>
+<body>
+
+<div class="monitor">
+  <div class="header">
+    <h2>⚔️ COMBAT TRACKER ⚔️</h2>
+    <div class="status" id="status">CONNECTING...</div>
+  </div>
+  
+  <div id="current-turn-display"></div>
+  <div id="turn-order"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="player-script.js"></script>
+</body>
+</html>
