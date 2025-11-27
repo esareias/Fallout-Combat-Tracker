@@ -22,8 +22,17 @@ try {
 // Function to sync data to Firebase
 function syncToFirebase() {
   if (database) {
+    // Clean up undefined values - Firebase hates them
+    const cleanEnemies = window.currentEnemies.map(e => {
+      const clean = {};
+      for (const [key, value] of Object.entries(e)) {
+        clean[key] = value === undefined ? null : value;
+      }
+      return clean;
+    });
+    
     database.ref('combat').set({
-      enemies: window.currentEnemies,
+      enemies: cleanEnemies,
       turnIndex: turnIndex,
       timestamp: Date.now()
     });
