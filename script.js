@@ -1,3 +1,34 @@
+// Firebase configuration - ADD YOUR CONFIG HERE
+const firebaseConfig = {
+  apiKey: "AIzaSyCCteaarXhk5VgW5o_WbNsbUXh1jMg1k6c",
+  authDomain: "big-apple-wasteland.firebaseapp.com",
+  projectId: "big-apple-wasteland",
+  storageBucket: "big-apple-wasteland.firebasestorage.app",
+  messagingSenderId: "1037976504390",
+  appId: "1:1037976504390:web:21576647ee3bdba6a76247"
+};
+
+// Initialize Firebase
+let database = null;
+try {
+  firebase.initializeApp(firebaseConfig);
+  database = firebase.database();
+  console.log("Firebase connected!");
+} catch (error) {
+  console.log("Firebase not configured:", error);
+}
+
+// Function to sync data to Firebase
+function syncToFirebase() {
+  if (database) {
+    database.ref('combat').set({
+      enemies: window.currentEnemies,
+      turnIndex: turnIndex,
+      timestamp: Date.now()
+    });
+  }
+}
+
 // --- GLOBAL STATE ---
 window.currentEnemies = [];
 let turnIndex = 0;
@@ -491,6 +522,8 @@ function advanceTurn() {
     if (window.currentEnemies.length === 0) return;
     turnIndex = (turnIndex + 1) % window.currentEnemies.length;
     renderRadar();
+    syncToFirebase(); // Add this
+
 }
 
 function rollAttack(id) {
@@ -530,6 +563,7 @@ function renderRadar() {
     msg.style.cssText = 'text-align: center; opacity: 0.5; margin-top: 50px;';
     msg.innerText = 'NO HOSTILES DETECTED';
     screen.appendChild(msg);
+    syncToFirebase(); // ADD THIS
     return;
   }
 
@@ -606,12 +640,16 @@ function renderRadar() {
     card.innerHTML = content;
     screen.appendChild(card);
   });
+  
+  syncToFirebase(); // ADD THIS at the very end
 }
 
 function clearRadar() {
     window.currentEnemies = [];
     turnIndex = 0;
     renderRadar();
+    syncToFirebase(); // Add this
+
 }
 
 function cycleTheme() {
