@@ -76,7 +76,8 @@ function renderTurnOrder(enemies, currentTurnIndex) {
     // Build icon if available
     let iconHTML = '';
     if (enemy.token_src) {
-      iconHTML = `<div class="char-icon" style="background-image: url(${enemy.token_src});"></div>`;
+      // FIX APPLIED HERE: Added single quotes around ${enemy.token_src} inside url('')
+      iconHTML = `<div class="char-icon" style="background-image: url('${enemy.token_src}');"></div>`;
     }
     
     card.innerHTML = `
