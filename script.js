@@ -734,7 +734,7 @@ function renderPlayerTokens() {
         
         const token = document.createElement('div');
         token.className = 'player-token';
-        token.style.backgroundImage = `url(${p.src})`;
+        token.style.backgroundImage = `url('${p.src}')`;
         token.style.borderColor = p.color;
         
         token.onclick = () => openInputForPlayer(p);
@@ -1034,7 +1034,7 @@ function renderRadar() {
 
     if (e.token_src) {
         // Apply token background if available (Players AND Enemies now)
-        cardStyle += `background-image: url(${e.token_src});`;
+        cardStyle += `background-image: url('${e.token_src}');`;
     }
     
     if (e.style.includes("player")) {
