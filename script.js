@@ -741,13 +741,17 @@ function renderRadar() {
     screen.appendChild(card);
   });
   
-  // Auto-sync combat tracker → map (every render)
-  if (window.parent && typeof window.parent.syncCombatToMap === 'function') {
-    try {
-      window.parent.syncCombatToMap();
-    } catch (e) {
-      // Silent fail - map might not be loaded
+   // Auto-sync combat tracker → map (every render)
+  try {
+    if (window.parent.sharedEnemies !== undefined) {
+      window.parent.sharedEnemies = window.currentEnemies;  // ← ADD THIS LINE
+      console.log('📤 Shared', window.currentEnemies.length, 'enemies → map');
     }
+    if (window.parent.syncCombatToMap) {
+      window.parent.syncCombatToMap();
+    }
+  } catch (e) {
+    // Silent fail
   }
 }
 
