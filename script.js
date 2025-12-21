@@ -769,8 +769,16 @@ function cycleTheme() {
   else if (body.className === "theme-amber") body.className = "theme-red";
   else body.className = "";
 }
+// === ADD THIS HERE ===
+function copyEnemiesToMap() {
+  const enemiesToCopy = window.currentEnemies.filter(e => !e.style?.includes('player'));
+  const jsonString = JSON.stringify(enemiesToCopy, null, 2);
+  navigator.clipboard.writeText(jsonString);
+  console.log('📋 COPIED', enemiesToCopy.length, 'enemies!');
+  alert(`COPIED ${enemiesToCopy.length} ENEMIES!\n\nPASTE THIS IN MAP CONSOLE:\n\nwindow.sharedEnemies = ${jsonString}`);
+}
+// === END FUNCTION ===
 
-// --- INITIALIZATION ---
 window.onload = function() {
     renderPlayerTokens();
 };
