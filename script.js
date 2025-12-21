@@ -750,7 +750,6 @@ function renderRadar() {
     }
   }
 }
-}
 
 
 function clearRadar() {
