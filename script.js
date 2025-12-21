@@ -740,7 +740,18 @@ function renderRadar() {
     card.innerHTML = content;
     screen.appendChild(card);
   });
+  
+  // Auto-sync combat tracker → map (every render)
+  if (window.parent && typeof window.parent.syncCombatToMap === 'function') {
+    try {
+      window.parent.syncCombatToMap();
+    } catch (e) {
+      // Silent fail - map might not be loaded
+    }
+  }
 }
+}
+
 
 function clearRadar() {
     window.currentEnemies = [];
