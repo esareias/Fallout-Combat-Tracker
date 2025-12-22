@@ -634,8 +634,20 @@ function spawnEnemies() {
 function updateStat(id, stat, value) {
     const index = window.currentEnemies.findIndex(e => e.id === id);
     if (index !== -1) {
-        if (stat === 'hp') window.currentEnemies[index].hp = parseInt(value) || 0;
-        else window.currentEnemies[index][stat] = value;
+        if (stat === 'hp') {
+            const newHP = parseInt(value) || 0;
+            window.currentEnemies[index].hp = newHP;
+            
+            // --- NEW DEATH SIGNAL ---
+            if (newHP <= 0) {
+                combatChannel.postMessage({ 
+                    type: 'ENEMY_DIED', 
+                    label: window.currentEnemies[index].name 
+                });
+            }
+        } else {
+            window.currentEnemies[index][stat] = value;
+        }
         renderRadar();
         syncToFirebase();
     }
@@ -644,12 +656,17 @@ function updateStat(id, stat, value) {
 function killEnemy(id) {
     const index = window.currentEnemies.findIndex(e => e.id === id);
     if (index !== -1) {
+        // Tell the map to delete the token before we remove it from the tracker list
+        combatChannel.postMessage({ 
+            type: 'REMOVE_TOKEN', 
+            label: window.currentEnemies[index].name 
+        });
+
         window.currentEnemies.splice(index, 1);
         renderRadar();
         syncToFirebase();
     }
 }
-
 function advanceTurn() {
     if (window.currentEnemies.length === 0) return;
     turnIndex = (turnIndex + 1) % window.currentEnemies.length;
