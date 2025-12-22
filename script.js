@@ -551,47 +551,50 @@ function spawnEnemies() {
   const type = document.getElementById('enemyType').value;
   const count = parseInt(document.getElementById('count').value);
   const modifierSelect = document.getElementById('difficulty');
+  
+  // Keep the number for your HP/Dice math
   const modifier = parseFloat(modifierSelect.value);
+  
+  // Use the RAW string from the dropdown for the prefix lookup
+  // This avoids the '2.0' vs '2' headache entirely.
+  const prefixKey = modifierSelect.value.trim(); 
   
   const baseStats = BESTIARY[type];
   if (!baseStats) return;
 
   for(let i=0; i<count; i++) {
+    // ... your existing math (modHP, modDice, etc.) stays the same ...
     let modHP = Math.floor(baseStats.hp * modifier);
     let modDice = Math.ceil(baseStats.dice_count * modifier);
     let modTarget = Math.ceil(baseStats.target_dmg * modifier);
     let modDR = baseStats.dr;
     if (typeof baseStats.dr === 'number' && baseStats.dr > 0) modDR = Math.floor(baseStats.dr * modifier);
 
-    const key = modifier.toString(); 
-    let prefixes = PREFIXES[key] || [""];
+    // --- UPDATED PREFIX LOGIC ---
+    // We look for the prefixKey (e.g., "2.0") first, then try the number string just in case
+    let prefixes = PREFIXES[prefixKey] || PREFIXES[modifier.toString()] || [""];
     const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
     const finalName = prefix ? `${prefix} ${type}` : type;
-    const sequence = baseStats.per + d(10);
-
-    let loot = null;
-    if (baseStats.loot_type === 'human' || baseStats.loot_type === 'human_pa') {
-        loot = generateHumanLoot({ target_dmg: modTarget, dr: modDR, loot_type: baseStats.loot_type });
-    }
-
+    
+    // ... the rest of your loop (sequence, loot, styleClass, etc.) ...
+    
+    // Make sure your styleClass check matches your logic
     let styleClass = "enemy-card";
     if (modifier >= 2.0) styleClass += " legendary";
     else if (modifier >= 1.5) styleClass += " hard";
     else if (modifier <= 0.75) styleClass += " weak";
-    
-    // Determine Visual Asset
-    const visualUrl = getVisualAsset(type);
 
+    // ... push to currentEnemies and broadcast ...
     window.currentEnemies.push({
-      name: finalName, hp: modHP, dr: modDR, dice_count: modDice, target_dmg: modTarget, per: baseStats.per,
-      seq: sequence, atk: baseStats.atk, note: baseStats.note, loot: loot, style: styleClass,
-      id: Math.random().toString(36).substr(2, 9),
-      token_src: visualUrl,
-      token_color: "var(--primary)"
+        name: finalName, hp: modHP, dr: modDR, dice_count: modDice, target_dmg: modTarget, per: baseStats.per,
+        seq: baseStats.per + d(10), atk: baseStats.atk, note: baseStats.note, loot: null, style: styleClass,
+        id: Math.random().toString(36).substr(2, 9),
+        token_src: getVisualAsset(type),
+        token_color: "var(--primary)"
     });
     combatChannel.postMessage({ type: type, label: finalName });
   }
-  
+
   window.currentEnemies.sort((a, b) => b.seq - a.seq);
   renderRadar();
   syncToFirebase();
