@@ -1,3 +1,6 @@
+// 1. Put this at the VERY top of your script.js file
+const combatChannel = new BroadcastChannel('wasteland_sync');
+
 // Firebase configuration - ADD YOUR CONFIG HERE
 const firebaseConfig = {
   apiKey: "AIzaSyCCteaarXhk5VgW5o_WbNsbUXh1jMg1k6c",
@@ -586,6 +589,7 @@ function spawnEnemies() {
       token_src: visualUrl,
       token_color: "var(--primary)"
     });
+    combatChannel.postMessage({ type: type, label: finalName });
   }
   
   window.currentEnemies.sort((a, b) => b.seq - a.seq);
