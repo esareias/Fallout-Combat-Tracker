@@ -544,7 +544,7 @@ const PREFIXES = {
     "0.75": ["Starving", "Malnourished", "Scrawny", "Wounded", "Limping", "Rusted", "Glitching", "Broken", "Frayed", "Pathetic", "Cowardly", "Simple", "Disoriented", "Skittish", "Flinching", "Worn", "Low-Power", "Crippled", "Feral", "Juvenile"],
     "1": ["Roaming", "Standard", "Common", "Scavenging", "Vicious", "Patrolling", "Aggressive", "Combat", "Enraged", "Mad", "Scrappy", "Seasoned", "Alert", "Guarding", "Armed", "Heavy", "Brutal", "Reinforced", "Junkyard", "Wrecked"],
     "1.5": ["Hardened", "Alpha", "Ruthless", "Elite", "Veteran", "Berserk", "Sentinel", "Wasteland", "Chem-Crazed", "Mechanized", "Advanced", "Armored", "Mercenary", "War-Forged", "Relentless", "Unstoppable", "Caustic", "Fused", "Overcharged", "Ghoulish"],
-    "2.0": ["Apex", "Tyrant", "Colossal", "Alpha-Stalker", "Unholy", "Omega", "Nuclear", "Prototype", "Sovereign", "Annihilator", "Apocalyptic", "Monstrous", "Immortal", "Abomination", "God-Tier", "Death-Toll", "Cursed", "Final", "Prime", "Arch-"]
+    "2": ["Apex", "Tyrant", "Colossal", "Alpha-Stalker", "Unholy", "Omega", "Nuclear", "Prototype", "Sovereign", "Annihilator", "Apocalyptic", "Monstrous", "Immortal", "Abomination", "God-Tier", "Death-Toll", "Cursed", "Final", "Prime", "Arch-"]
 };
 
 function spawnEnemies() {
