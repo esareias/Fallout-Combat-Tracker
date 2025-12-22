@@ -139,70 +139,83 @@ function getVisualAsset(enemyName) {
 
 // 3. ENEMY STATS DATABASE
 const BESTIARY = {
-  "Blightfire Fuse": { "hp": 30, "dr": 1, "per": 5, "dice_count": 4, "target_dmg": 4, "atk": "(Dynamite/Pistol)", "loot_type": "human" },
-  "Blightfire Decanus": { "hp": 65, "dr": 3, "per": 6, "dice_count": 6, "target_dmg": 6, "atk": "(Machete/Repeater)", "loot_type": "human" },
-  "Blightfire Pyro": { "hp": 50, "dr": 2, "per": 5, "dice_count": 5, "target_dmg": 5, "atk": "(Flamer)", "loot_type": "human" },
-  "NCR Remnant": { "hp": 40, "dr": 2, "per": 6, "dice_count": 5, "target_dmg": 5, "atk": "(Service Rifle)", "loot_type": "human" },
-  "NCR Ranger Exile": { "hp": 85, "dr": 4, "per": 8, "dice_count": 8, "target_dmg": 8, "atk": "(Big Iron)", "loot_type": "human" },
- "Raider": { "hp": 25, "dr": 1, "per": 5, "dice_count": 3, "target_dmg": 3, "atk": "(Pipe Wep)", "loot_type": "human" },
-  "Cannibal": { "hp": 30, "dr": 1, "per": 5, "dice_count": 4, "target_dmg": 4, "atk": "(Melee)", "loot_type": "human" },
-  "Slaver": { "hp": 40, "dr": 2, "per": 5, "dice_count": 4, "target_dmg": 4, "atk": "(Gun/Whip)", "loot_type": "human" },
-  "Headhunter": { "hp": 70, "dr": 4, "per": 6, "dice_count": 6, "target_dmg": 6, "atk": "(High Tech)", "loot_type": "human" },
-  "Wolfe Merc": { "hp": 60, "dr": 3, "per": 6, "dice_count": 6, "target_dmg": 6, "atk": "(Combat Rifle)", "loot_type": "human" },
-  "Scout Trooper": { "hp": 50, "dr": 2, "per": 6, "dice_count": 5, "target_dmg": 5, "atk": "(Rifle)", "loot_type": "human" },
-  "Big Apple Ranger": { "hp": 55, "dr": 3, "per": 6, "dice_count": 6, "target_dmg": 6, "atk": "(Urban Combat)", "loot_type": "human" },
-  "BoS Squad": { "hp": 90, "dr": 5, "per": 7, "dice_count": 7, "target_dmg": 7, "atk": "(Energy Wep)", "loot_type": "human_pa" },
-  "Enclave Remnant": { "hp": 85, "dr": 5, "per": 7, "dice_count": 7, "target_dmg": 7, "atk": "(Plasma)", "loot_type": "human_pa" },
-  "Hitman": { "hp": 65, "dr": 3, "per": 8, "dice_count": 7, "target_dmg": 7, "atk": "(Sniper)", "loot_type": "human" },
-  "Heretic": { "hp": 45, "dr": 2, "per": 5, "dice_count": 5, "target_dmg": 5, "atk": "(Gang Wep)", "loot_type": "human" },
-  "Feral Ghoul": { "hp": 25, "dr": 0, "per": 3, "dice_count": 3, "target_dmg": 3, "atk": "(Melee)", "loot_type": "creature" },
-  "Feral Ghoul Roamer": { "hp": 50, "dr": 0, "per": 4, "dice_count": 5, "target_dmg": 5, "atk": "(Melee)", "loot_type": "creature" },
-  "Glowing One": { "hp": 90, "dr": 0, "per": 5, "dice_count": 8, "target_dmg": 8, "atk": "(Melee)", "note": "Rad Aura", "loot_type": "creature" },
-  "Reaver": { "hp": 140, "dr": 2, "per": 6, "dice_count": 7, "target_dmg": 7, "atk": "(Rad Bomb)", "loot_type": "creature" },
-  "Chinese Remnant": { "hp": 50, "dr": 0, "per": 5, "dice_count": 6, "target_dmg": 6, "atk": "(Rifle)", "loot_type": "creature" },
-  "Trog": { "hp": 35, "dr": 0, "per": 4, "dice_count": 4, "target_dmg": 4, "atk": "(Claws)", "note": "Fast & Vicious", "loot_type": "creature" },
-  "Slag": { "hp": 40, "dr": 0, "per": 5, "dice_count": 4, "target_dmg": 4, "atk": "(Melee)", "note": "Dark Vision", "loot_type": "creature" },
-  "Super Mutant": { "hp": 100, "dr": 1, "per": 3, "dice_count": 4, "target_dmg": 4, "atk": "(Melee/Rifle)", "loot_type": "human" },
-  "Super Mutant Brute": { "hp": 200, "dr": 1, "per": 5, "dice_count": 5, "target_dmg": 5, "atk": "(Melee/Rifle)", "loot_type": "human" },
-  "Super Mutant Master": { "hp": 300, "dr": 1, "per": 6, "dice_count": 6, "target_dmg": 6, "atk": "(Rifle)", "loot_type": "human" },
-  "Behemoth": { "hp": 2000, "dr": 1, "per": 5, "dice_count": 8, "target_dmg": 8, "atk": "(Melee)", "note": "Immune to Knockdown", "loot_type": "human" },
-  "Nightkin": { "hp": 180, "dr": 1, "per": 8, "dice_count": 7, "target_dmg": 7, "atk": "(Stealth Boy)", "loot_type": "human" },
-  "Radroach": { "hp": 5, "dr": 0, "per": 3, "dice_count": 2, "target_dmg": 2, "atk": "(Bite)", "loot_type": "creature" },
-  "Bloatfly": { "hp": 15, "dr": 0, "per": 5, "dice_count": 2, "target_dmg": 2, "atk": "(Spit)", "loot_type": "creature" },
-  "Giant Ant": { "hp": 30, "dr": 0, "per": 3, "dice_count": 3, "target_dmg": 3, "atk": "(Bite)", "loot_type": "creature" },
-  "Fire Ant": { "hp": 30, "dr": 0, "per": 3, "dice_count": 7, "target_dmg": 7, "atk": "(Melee/Fire)", "loot_type": "creature" },
-  "Mole Rat": { "hp": 25, "dr": 0, "per": 3, "dice_count": 4, "target_dmg": 4, "atk": "(Bite)", "loot_type": "creature" },
-  "Pig Rat": { "hp": 60, "dr": 0, "per": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Bite)", "loot_type": "creature" },
-  "Vicious Dog": { "hp": 20, "dr": 0, "per": 8, "dice_count": 6, "target_dmg": 6, "atk": "(Bite)", "loot_type": "creature" },
-  "Radscorpion": { "hp": 100, "dr": 0, "per": 4, "dice_count": 8, "target_dmg": 8, "atk": "(Poison)", "loot_type": "creature" },
-  "Centaur": { "hp": 100, "dr": 0, "per": 9, "dice_count": 7, "target_dmg": 7, "atk": "(Spit)", "loot_type": "creature" },
-  "Yao Guai": { "hp": 220, "dr": 0, "per": 7, "dice_count": 10, "target_dmg": 10, "atk": "(Melee)", "loot_type": "creature" },
-  "Guai Wu": { "hp": 75, "dr": 0, "per": 8, "dice_count": 6, "target_dmg": 6, "atk": "(Melee)", "note": "Climber", "loot_type": "creature" },
-  "Mirelurk": { "hp": 120, "dr": 5, "per": 4, "dice_count": 8, "target_dmg": 8, "atk": "(Melee)", "loot_type": "creature" },
-  "Deathclaw": { "hp": 500, "dr": 0, "per": 8, "dice_count": 10, "target_dmg": 10, "atk": "(Melee)", "loot_type": "creature" },
-  "Scythewing": { "hp": 200, "dr": 0, "per": 8, "dice_count": 6, "target_dmg": 6, "atk": "(Melee)", "note": "Flying", "loot_type": "creature" },
-  "Gecko": { "hp": 30, "dr": 0, "per": 4, "dice_count": 4, "target_dmg": 4, "atk": "(Bite)", "loot_type": "creature" },
-  "Golden Gecko": { "hp": 60, "dr": 1, "per": 5, "dice_count": 5, "target_dmg": 5, "atk": "(Rad Bite)", "loot_type": "creature" },
-  "Cazador": { "hp": 85, "dr": 0, "per": 9, "dice_count": 7, "target_dmg": 7, "atk": "(Poison)", "note": "Frenzied", "loot_type": "creature" },
-  "Nightstalker": { "hp": 65, "dr": 0, "per": 7, "dice_count": 5, "target_dmg": 5, "atk": "(Bite)", "note": "Pack Tactics", "loot_type": "creature" },
-  "Spore Carrier": { "hp": 60, "dr": 0, "per": 4, "dice_count": 5, "target_dmg": 5, "atk": "(Melee)", "loot_type": "creature" },
-  "Spore Plant": { "hp": 40, "dr": 0, "per": 3, "dice_count": 4, "target_dmg": 4, "atk": "(Spit)", "loot_type": "creature" },
-  "Tunneler": { "hp": 65, "dr": 1, "per": 6, "dice_count": 6, "target_dmg": 6, "atk": "(Melee)", "note": "Pack Hunter", "loot_type": "creature" },
-  "Giant Mantid": { "hp": 60, "dr": 1, "per": 6, "dice_count": 5, "target_dmg": 5, "atk": "(Claws)", "loot_type": "creature" },
-  "Moray Eel": { "hp": 40, "dr": 0, "per": 5, "dice_count": 5, "target_dmg": 5, "atk": "(Bite)", "loot_type": "creature" },
-  "Turret": { "hp": 40, "dr": 0, "per": 10, "dice_count": 3, "target_dmg": 3, "atk": "(Gun)", "loot_type": "inorganic" },
-  "Oculobot": { "hp": 30, "dr": 0, "per": 5, "dice_count": 3, "target_dmg": 3, "atk": "(Zapper)", "loot_type": "inorganic" },
-  "Protectron": { "hp": 75, "dr": 0, "per": 4, "dice_count": 6, "target_dmg": 6, "atk": "(Laser)", "loot_type": "inorganic" },
-  "Protect-O-Bot": { "hp": 85, "dr": 0, "per": 4, "dice_count": 6, "target_dmg": 6, "atk": "(Laser)", "note": "Fast Mover", "loot_type": "inorganic" },
-  "Mr Handy": { "hp": 100, "dr": 0, "per": 5, "dice_count": 4, "target_dmg": 4, "atk": "(Melee/Fire)", "loot_type": "inorganic" },
-  "Mr Gutsy": { "hp": 300, "dr": 0, "per": 6, "dice_count": 8, "target_dmg": 8, "atk": "(Plasma/Gun)", "loot_type": "inorganic" },
-  "Sentry Bot": { "hp": 500, "dr": 0, "per": 7, "dice_count": 8, "target_dmg": 8, "atk": "(Minigun/Missile)", "loot_type": "inorganic" },
-  "Securitron Mk I": { "hp": 180, "dr": 4, "per": 6, "dice_count": 7, "target_dmg": 7, "atk": "(Gatling)", "loot_type": "inorganic" },
-  "Securitron Mk II": { "hp": 250, "dr": 5, "per": 7, "dice_count": 8, "target_dmg": 8, "atk": "(Missile/Laser)", "note": "Regen", "loot_type": "inorganic" },
-  "Roboscorpion": { "hp": 150, "dr": 6, "per": 4, "dice_count": 6, "target_dmg": 6, "atk": "(Laser Tail)", "loot_type": "inorganic" },
-  "Brahmin": { "hp": 40, "dr": 0, "per": 3, "dice_count": 3, "target_dmg": 3, "atk": "(Melee)", "loot_type": "creature" },
-  "Fire Gecko": { "hp": 80, "dr": 2, "per": 5, "dice_count": 6, "target_dmg": 6, "atk": "(Fire Breath)", "loot_type": "creature" },
-  "Alien": { "hp": 75, "dr": 2, "per": 8, "dice_count": 8, "target_dmg": 8, "atk": "(Alien Blaster)", "note": "Zetan Tech", "loot_type": "creature" }
+  // Humans & Raiders (Typical base: 2 APR)
+  "Blightfire Fuse": { "hp": 30, "dr": 1, "per": 5, "apr": 2, "dice_count": 4, "target_dmg": 4, "atk": "(Dynamite/Pistol)", "loot_type": "human" },
+  "Blightfire Decanus": { "hp": 65, "dr": 3, "per": 6, "apr": 2, "dice_count": 6, "target_dmg": 6, "atk": "(Machete/Repeater)", "loot_type": "human" },
+  "Blightfire Pyro": { "hp": 50, "dr": 2, "per": 5, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Flamer)", "loot_type": "human" },
+  "NCR Remnant": { "hp": 40, "dr": 2, "per": 6, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Service Rifle)", "loot_type": "human" },
+  "NCR Ranger Exile": { "hp": 85, "dr": 4, "per": 8, "apr": 3, "dice_count": 8, "target_dmg": 8, "atk": "(Big Iron)", "loot_type": "human" },
+  "Raider": { "hp": 25, "dr": 1, "per": 5, "apr": 2, "dice_count": 3, "target_dmg": 3, "atk": "(Pipe Wep)", "loot_type": "human" },
+  "Cannibal": { "hp": 30, "dr": 1, "per": 5, "apr": 2, "dice_count": 4, "target_dmg": 4, "atk": "(Melee)", "loot_type": "human" },
+  "Slaver": { "hp": 40, "dr": 2, "per": 5, "apr": 2, "dice_count": 4, "target_dmg": 4, "atk": "(Gun/Whip)", "loot_type": "human" },
+  "Headhunter": { "hp": 70, "dr": 4, "per": 6, "apr": 2, "dice_count": 6, "target_dmg": 6, "atk": "(High Tech)", "loot_type": "human" },
+  "Wolfe Merc": { "hp": 60, "dr": 3, "per": 6, "apr": 2, "dice_count": 6, "target_dmg": 6, "atk": "(Combat Rifle)", "loot_type": "human" },
+  "Scout Trooper": { "hp": 50, "dr": 2, "per": 6, "apr": 3, "dice_count": 5, "target_dmg": 5, "atk": "(Rifle)", "loot_type": "human" },
+  "Big Apple Ranger": { "hp": 55, "dr": 3, "per": 6, "apr": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Urban Combat)", "loot_type": "human" },
+  "BoS Squad": { "hp": 90, "dr": 5, "per": 7, "apr": 3, "dice_count": 7, "target_dmg": 7, "atk": "(Energy Wep)", "loot_type": "human_pa" },
+  "Enclave Remnant": { "hp": 85, "dr": 5, "per": 7, "apr": 3, "dice_count": 7, "target_dmg": 7, "atk": "(Plasma)", "loot_type": "human_pa" },
+  "Hitman": { "hp": 65, "dr": 3, "per": 8, "apr": 4, "dice_count": 7, "target_dmg": 7, "atk": "(Sniper)", "loot_type": "human" },
+  "Heretic": { "hp": 45, "dr": 2, "per": 5, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Gang Wep)", "loot_type": "human" },
+
+  // Ghouls (Erratic movement: 2-3 APR)
+  "Feral Ghoul": { "hp": 25, "dr": 0, "per": 3, "apr": 2, "dice_count": 3, "target_dmg": 3, "atk": "(Melee)", "loot_type": "creature" },
+  "Feral Ghoul Roamer": { "hp": 50, "dr": 0, "per": 4, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Melee)", "loot_type": "creature" },
+  "Glowing One": { "hp": 90, "dr": 0, "per": 5, "apr": 2, "dice_count": 8, "target_dmg": 8, "atk": "(Melee)", "note": "Rad Aura", "loot_type": "creature" },
+  "Reaver": { "hp": 140, "dr": 2, "per": 6, "apr": 3, "dice_count": 7, "target_dmg": 7, "atk": "(Rad Bomb)", "loot_type": "creature" },
+  "Chinese Remnant": { "hp": 50, "dr": 0, "per": 5, "apr": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Rifle)", "loot_type": "creature" },
+  "Trog": { "hp": 35, "dr": 0, "per": 4, "apr": 3, "dice_count": 4, "target_dmg": 4, "atk": "(Claws)", "note": "Fast & Vicious", "loot_type": "creature" },
+  "Slag": { "hp": 40, "dr": 0, "per": 5, "apr": 2, "dice_count": 4, "target_dmg": 4, "atk": "(Melee)", "note": "Dark Vision", "loot_type": "creature" },
+
+  // Mutants (Slow agility, base 1 APR; penalty: cite 1069)
+  "Super Mutant": { "hp": 100, "dr": 1, "per": 3, "apr": 1, "dice_count": 4, "target_dmg": 4, "atk": "(Melee/Rifle)", "loot_type": "human" },
+  "Super Mutant Brute": { "hp": 200, "dr": 1, "per": 5, "apr": 1, "dice_count": 5, "target_dmg": 5, "atk": "(Melee/Rifle)", "loot_type": "human" },
+  "Super Mutant Master": { "hp": 300, "dr": 1, "per": 6, "apr": 2, "dice_count": 6, "target_dmg": 6, "atk": "(Rifle)", "loot_type": "human" },
+  "Behemoth": { "hp": 2000, "dr": 1, "per": 5, "apr": 2, "dice_count": 8, "target_dmg": 8, "atk": "(Melee)", "note": "Immune to Knockdown", "loot_type": "human" },
+  "Nightkin": { "hp": 180, "dr": 1, "per": 8, "apr": 3, "dice_count": 7, "target_dmg": 7, "atk": "(Stealth Boy)", "loot_type": "human" },
+
+  // Abominations & Wildlife
+  "Deathclaw": { "hp": 500, "dr": 0, "per": 8, "apr": 4, "dice_count": 10, "target_dmg": 10, "atk": "(Melee)", "loot_type": "creature" },
+  "Yao Guai": { "hp": 220, "dr": 0, "per": 7, "apr": 3, "dice_count": 10, "target_dmg": 10, "atk": "(Melee)", "loot_type": "creature" },
+  "Guai Wu": { "hp": 75, "dr": 0, "per": 8, "apr": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Melee)", "note": "Climber", "loot_type": "creature" },
+  "Cazador": { "hp": 85, "dr": 0, "per": 9, "apr": 4, "dice_count": 7, "target_dmg": 7, "atk": "(Poison)", "note": "Frenzied", "loot_type": "creature" },
+  "Scythewing": { "hp": 200, "dr": 0, "per": 8, "apr": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Melee)", "note": "Flying", "loot_type": "creature" },
+  "Nightstalker": { "hp": 65, "dr": 0, "per": 7, "apr": 3, "dice_count": 5, "target_dmg": 5, "atk": "(Bite)", "note": "Pack Tactics", "loot_type": "creature" },
+  "Tunneler": { "hp": 65, "dr": 1, "per": 6, "apr": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Melee)", "note": "Pack Hunter", "loot_type": "creature" },
+  "Mirelurk": { "hp": 120, "dr": 5, "per": 4, "apr": 2, "dice_count": 8, "target_dmg": 8, "atk": "(Melee)", "loot_type": "creature" },
+  "Radscorpion": { "hp": 100, "dr": 0, "per": 4, "apr": 2, "dice_count": 8, "target_dmg": 8, "atk": "(Poison)", "loot_type": "creature" },
+  "Centaur": { "hp": 100, "dr": 0, "per": 9, "apr": 2, "dice_count": 7, "target_dmg": 7, "atk": "(Spit)", "loot_type": "creature" },
+  "Spore Carrier": { "hp": 60, "dr": 0, "per": 4, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Melee)", "loot_type": "creature" },
+  "Spore Plant": { "hp": 40, "dr": 0, "per": 3, "apr": 1, "dice_count": 4, "target_dmg": 4, "atk": "(Spit)", "loot_type": "creature" },
+  "Gecko": { "hp": 30, "dr": 0, "per": 4, "apr": 2, "dice_count": 4, "target_dmg": 4, "atk": "(Bite)", "loot_type": "creature" },
+  "Golden Gecko": { "hp": 60, "dr": 1, "per": 5, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Rad Bite)", "loot_type": "creature" },
+  "Fire Gecko": { "hp": 80, "dr": 2, "per": 5, "apr": 2, "dice_count": 6, "target_dmg": 6, "atk": "(Fire Breath)", "loot_type": "creature" },
+  "Moray Eel": { "hp": 40, "dr": 0, "per": 5, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Bite)", "loot_type": "creature" },
+  
+  // Pests & Minor Wildlife
+  "Radroach": { "hp": 5, "dr": 0, "per": 3, "apr": 1, "dice_count": 2, "target_dmg": 2, "atk": "(Bite)", "loot_type": "creature" },
+  "Bloatfly": { "hp": 15, "dr": 0, "per": 5, "apr": 2, "dice_count": 2, "target_dmg": 2, "atk": "(Spit)", "loot_type": "creature" },
+  "Giant Ant": { "hp": 30, "dr": 0, "per": 3, "apr": 1, "dice_count": 3, "target_dmg": 3, "atk": "(Bite)", "loot_type": "creature" },
+  "Fire Ant": { "hp": 30, "dr": 0, "per": 3, "apr": 2, "dice_count": 7, "target_dmg": 7, "atk": "(Melee/Fire)", "loot_type": "creature" },
+  "Mole Rat": { "hp": 25, "dr": 0, "per": 3, "apr": 1, "dice_count": 4, "target_dmg": 4, "atk": "(Bite)", "loot_type": "creature" },
+  "Pig Rat": { "hp": 60, "dr": 0, "per": 3, "apr": 2, "dice_count": 6, "target_dmg": 6, "atk": "(Bite)", "loot_type": "creature" },
+  "Vicious Dog": { "hp": 20, "dr": 0, "per": 8, "apr": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Bite)", "loot_type": "creature" },
+  "Giant Mantid": { "hp": 60, "dr": 1, "per": 6, "apr": 2, "dice_count": 5, "target_dmg": 5, "atk": "(Claws)", "loot_type": "creature" },
+  "Brahmin": { "hp": 40, "dr": 0, "per": 3, "apr": 1, "dice_count": 3, "target_dmg": 3, "atk": "(Melee)", "loot_type": "creature" },
+  
+  // Inorganics (Robots: cite 2190-2194)
+  "Turret": { "hp": 40, "dr": 0, "per": 10, "apr": 1, "dice_count": 3, "target_dmg": 3, "atk": "(Gun)", "loot_type": "inorganic" },
+  "Oculobot": { "hp": 30, "dr": 0, "per": 5, "apr": 2, "dice_count": 3, "target_dmg": 3, "atk": "(Zapper)", "loot_type": "inorganic" },
+  "Protectron": { "hp": 75, "dr": 0, "per": 4, "apr": 1, "dice_count": 6, "target_dmg": 6, "atk": "(Laser)", "loot_type": "inorganic" },
+  "Protect-O-Bot": { "hp": 85, "dr": 0, "per": 4, "apr": 2, "dice_count": 6, "target_dmg": 6, "atk": "(Laser)", "note": "Fast Mover", "loot_type": "inorganic" },
+  "Mr Handy": { "hp": 100, "dr": 0, "per": 5, "apr": 3, "dice_count": 4, "target_dmg": 4, "atk": "(Melee/Fire)", "loot_type": "inorganic" },
+  "Mr Gutsy": { "hp": 300, "dr": 0, "per": 6, "apr": 3, "dice_count": 8, "target_dmg": 8, "atk": "(Plasma/Gun)", "loot_type": "inorganic" },
+  "Sentry Bot": { "hp": 500, "dr": 0, "per": 7, "apr": 3, "dice_count": 8, "target_dmg": 8, "atk": "(Minigun/Missile)", "loot_type": "inorganic" },
+  "Securitron Mk I": { "hp": 180, "dr": 4, "per": 6, "apr": 2, "dice_count": 7, "target_dmg": 7, "atk": "(Gatling)", "loot_type": "inorganic" },
+  "Securitron Mk II": { "hp": 250, "dr": 5, "per": 7, "apr": 3, "dice_count": 8, "target_dmg": 8, "atk": "(Missile/Laser)", "note": "Regen", "loot_type": "inorganic" },
+  "Roboscorpion": { "hp": 150, "dr": 6, "per": 4, "apr": 3, "dice_count": 6, "target_dmg": 6, "atk": "(Laser Tail)", "loot_type": "inorganic" },
+  
+  // Other
+  "Alien": { "hp": 75, "dr": 2, "per": 8, "apr": 3, "dice_count": 8, "target_dmg": 8, "atk": "(Alien Blaster)", "note": "Zetan Tech", "loot_type": "creature" }
 };
 
 // 4. LOOT DATABASE
@@ -551,50 +564,68 @@ function spawnEnemies() {
   const type = document.getElementById('enemyType').value;
   const count = parseInt(document.getElementById('count').value);
   const modifierSelect = document.getElementById('difficulty');
-  
-  // Keep the number for your HP/Dice math
   const modifier = parseFloat(modifierSelect.value);
-  
-  // Use the RAW string from the dropdown for the prefix lookup
-  // This avoids the '2.0' vs '2' headache entirely.
-  const prefixKey = modifierSelect.value.trim(); 
   
   const baseStats = BESTIARY[type];
   if (!baseStats) return;
 
+  // This is the fix for the Legendary names
+  const prefixKey = modifierSelect.value.trim(); 
+
   for(let i=0; i<count; i++) {
-    // ... your existing math (modHP, modDice, etc.) stays the same ...
+    // 1. Math for Stats (Scaling APR here!)
     let modHP = Math.floor(baseStats.hp * modifier);
     let modDice = Math.ceil(baseStats.dice_count * modifier);
     let modTarget = Math.ceil(baseStats.target_dmg * modifier);
+    let modAPR = Math.floor(baseStats.apr * modifier); 
     let modDR = baseStats.dr;
     if (typeof baseStats.dr === 'number' && baseStats.dr > 0) modDR = Math.floor(baseStats.dr * modifier);
 
-    // --- UPDATED PREFIX LOGIC ---
-    // We look for the prefixKey (e.g., "2.0") first, then try the number string just in case
+    // 2. Prefix Logic
     let prefixes = PREFIXES[prefixKey] || PREFIXES[modifier.toString()] || [""];
     const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
     const finalName = prefix ? `${prefix} ${type}` : type;
     
-    // ... the rest of your loop (sequence, loot, styleClass, etc.) ...
-    
-    // Make sure your styleClass check matches your logic
+    // 3. Initiative Sequence
+    const sequence = baseStats.per + d(10);
+
+    // 4. Loot Generation
+    let loot = null;
+    if (baseStats.loot_type === 'human' || baseStats.loot_type === 'human_pa') {
+        loot = generateHumanLoot({ target_dmg: modTarget, dr: modDR, loot_type: baseStats.loot_type });
+    }
+
+    // 5. Card Styling
     let styleClass = "enemy-card";
     if (modifier >= 2.0) styleClass += " legendary";
     else if (modifier >= 1.5) styleClass += " hard";
     else if (modifier <= 0.75) styleClass += " weak";
+    
+    const visualUrl = getVisualAsset(type);
 
-    // ... push to currentEnemies and broadcast ...
+    // 6. Push to Tracker State
     window.currentEnemies.push({
-        name: finalName, hp: modHP, dr: modDR, dice_count: modDice, target_dmg: modTarget, per: baseStats.per,
-        seq: baseStats.per + d(10), atk: baseStats.atk, note: baseStats.note, loot: null, style: styleClass,
-        id: Math.random().toString(36).substr(2, 9),
-        token_src: getVisualAsset(type),
-        token_color: "var(--primary)"
+      name: finalName, 
+      hp: modHP, 
+      dr: modDR, 
+      dice_count: modDice, 
+      target_dmg: modTarget, 
+      per: baseStats.per,
+      apr: modAPR, 
+      seq: sequence, 
+      atk: baseStats.atk, 
+      note: baseStats.note, 
+      loot: loot, 
+      style: styleClass,
+      id: Math.random().toString(36).substr(2, 9),
+      token_src: visualUrl,
+      token_color: "var(--primary)"
     });
+
+    // 7. Shout to the Map Tab
     combatChannel.postMessage({ type: type, label: finalName });
   }
-
+  
   window.currentEnemies.sort((a, b) => b.seq - a.seq);
   renderRadar();
   syncToFirebase();
@@ -702,11 +733,14 @@ function renderRadar() {
                     ${e.name} ${e.token_color === '#ffffff' ? `[<span style="color:#aaa;">WHITE</span>]` : ''}
                 </span>
                 <div class="enemy-stats">
-                    <span class="stat-box">HP: <input type="text" class="stat-input" value="${e.hp}" onchange="updateStat('${e.id}', 'hp', this.value)"></span>
-                    <span class="stat-box">DR: <input type="text" class="stat-input" value="${e.dr}" onchange="updateStat('${e.id}', 'dr', this.value)" style="width:100px;"></span>
-                    <span class="stat-box" style="color:#ffee99;">SEQ: ${e.seq}</span>
-                    <button class="kill-btn" style="float:right;" onclick="killEnemy('${e.id}')">X</button>
-                </div>
+    <span class="stat-box">HP: <input type="text" class="stat-input" value="${e.hp}" onchange="updateStat('${e.id}', 'hp', this.value)"></span>
+    <span class="stat-box">DR: <input type="text" class="stat-input" value="${e.dr}" onchange="updateStat('${e.id}', 'dr', this.value)" style="width:100px;"></span>
+    
+    <span class="stat-box" style="color:#ff5555; font-weight:bold;">APR: ${e.apr || 1}</span>
+
+    <span class="stat-box" style="color:#ffee99;">SEQ: ${e.seq}</span>
+    <button class="kill-btn" style="float:right;" onclick="killEnemy('${e.id}')">X</button>
+</div>
             </div>
         `;
     } else {
@@ -729,14 +763,17 @@ function renderRadar() {
                     <button class="action-btn" onclick="rollAttack('${e.id}')">ROLL ATK</button>
                 </span>
                 <div class="enemy-stats">
-                  <span class="stat-box">HP: <input type="number" class="stat-input" value="${e.hp}" onchange="updateStat('${e.id}', 'hp', this.value)"></span>
-                  <span class="stat-box">DR: <input type="text" class="stat-input" value="${e.dr}" onchange="updateStat('${e.id}', 'dr', this.value)" style="width:100px;"></span>
-                  <span class="stat-box" style="color:var(--primary);">ATK DICE: ${e.dice_count}</span>
-                  <span class="stat-box" style="color:#ffee99;">TARGET: ${e.target_dmg}</span>
-                  <span class="stat-box">PER: ${e.per}</span>
-                  <button class="kill-btn" onclick="killEnemy('${e.id}')">X</button>
-                  ${e.note ? `<br/><span style="color:#ffaaaa; font-size:0.8em; text-shadow:1px 1px 0 #000;">NOTE: ${e.note}</span>` : ''}
-                </div>
+  <span class="stat-box">HP: <input type="number" class="stat-input" value="${e.hp}" onchange="updateStat('${e.id}', 'hp', this.value)"></span>
+  <span class="stat-box">DR: <input type="text" class="stat-input" value="${e.dr}" onchange="updateStat('${e.id}', 'dr', this.value)" style="width:100px;"></span>
+  
+  <span class="stat-box" style="color:#ff5555; font-weight:bold;">APR: ${e.apr}</span>
+
+  <span class="stat-box" style="color:var(--primary);">ATK DICE: ${e.dice_count}</span>
+  <span class="stat-box" style="color:#ffee99;">TARGET: ${e.target_dmg}</span>
+  <span class="stat-box">PER: ${e.per}</span>
+  <button class="kill-btn" onclick="killEnemy('${e.id}')">X</button>
+  ${e.note ? `<br/><span style="color:#ffaaaa; font-size:0.8em; text-shadow:1px 1px 0 #000;">NOTE: ${e.note}</span>` : ''}
+</div>
               </div>
           </div>
           ${attackHTML}
