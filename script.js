@@ -623,7 +623,7 @@ function spawnEnemies() {
     });
 
     // 7. Shout to the Map Tab
-    combatChannel.postMessage({ type: type, label: finalName });
+    combatChannel.postMessage({ type: type, label: finalName, multiplier: modifier });
   }
   
   window.currentEnemies.sort((a, b) => b.seq - a.seq);
