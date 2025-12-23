@@ -640,10 +640,17 @@ function updateStat(id, stat, value) {
             
             // --- NEW DEATH SIGNAL ---
             if (newHP <= 0) {
+              // ADD THIS LINE, EMANUEL! 
+                // It makes the tracker remember the grey color.
+                window.currentEnemies[index].token_color = '#4b5563';
+              
                 combatChannel.postMessage({ 
                     type: 'ENEMY_DIED', 
                     label: window.currentEnemies[index].name 
                 });
+              } else {
+                // If they somehow heal, turn them back to primary color
+                window.currentEnemies[index].token_color = "var(--primary)";
             }
         } else {
             window.currentEnemies[index][stat] = value;
