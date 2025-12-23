@@ -569,11 +569,10 @@ function spawnEnemies() {
   const baseStats = BESTIARY[type];
   if (!baseStats) return;
 
-  // This is the fix for the Legendary names
   const prefixKey = modifierSelect.value.trim(); 
 
   for(let i=0; i<count; i++) {
-    // 1. Math for Stats (Scaling APR here!)
+    // 1. Math for Stats
     let modHP = Math.floor(baseStats.hp * modifier);
     let modDice = Math.ceil(baseStats.dice_count * modifier);
     let modTarget = Math.ceil(baseStats.target_dmg * modifier);
@@ -589,7 +588,7 @@ function spawnEnemies() {
     // 3. Initiative Sequence
     const sequence = baseStats.per + d(10);
 
-    // 4. Loot Generation
+    // 4. PRESERVED: Loot Generation
     let loot = null;
     if (baseStats.loot_type === 'human' || baseStats.loot_type === 'human_pa') {
         loot = generateHumanLoot({ target_dmg: modTarget, dr: modDR, loot_type: baseStats.loot_type });
@@ -603,7 +602,7 @@ function spawnEnemies() {
     
     const visualUrl = getVisualAsset(type);
 
-    // 6. Push to Tracker State
+    // 6. Push to Tracker State (Saving the DNA/Multiplier)
     window.currentEnemies.push({
       name: finalName, 
       hp: modHP, 
@@ -611,19 +610,19 @@ function spawnEnemies() {
       dice_count: modDice, 
       target_dmg: modTarget, 
       per: baseStats.per,
-      apr: modAPR,
-      multiplier: modifier,
+      apr: modAPR, 
+      multiplier: modifier, // <--- SAVED FOR MAP SCALING
       seq: sequence, 
       atk: baseStats.atk, 
       note: baseStats.note, 
-      loot: loot, 
+      loot: loot, // <--- REINSTATED ACTUAL LOOT
       style: styleClass,
       id: Math.random().toString(36).substr(2, 9),
       token_src: visualUrl,
       token_color: "var(--primary)"
     });
 
-    // 7. Shout to the Map Tab
+    // 7. BROADCASTING THE DNA (Multiplier)
     combatChannel.postMessage({ type: type, label: finalName, multiplier: modifier });
   }
   
