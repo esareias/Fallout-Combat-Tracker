@@ -634,27 +634,39 @@ function spawnEnemies() {
 function updateStat(id, stat, value) {
     const index = window.currentEnemies.findIndex(e => e.id === id);
     if (index !== -1) {
+        const enemy = window.currentEnemies[index];
+
         if (stat === 'hp') {
             const newHP = parseInt(value) || 0;
-            window.currentEnemies[index].hp = newHP;
+            const oldHP = parseInt(enemy.hp) || 0;
+
+            // --- HIT SIGNAL: Trigger map animation if damage was taken ---
+            if (newHP < oldHP) {
+                combatChannel.postMessage({ 
+                    type: 'ENEMY_DAMAGED', 
+                    label: enemy.name 
+                });
+            }
+
+            enemy.hp = newHP;
             
-            // --- NEW DEATH SIGNAL ---
+            // --- DEATH VS LIFE LOGIC ---
             if (newHP <= 0) {
-              // ADD THIS LINE, EMANUEL! 
-                // It makes the tracker remember the grey color.
-                window.currentEnemies[index].token_color = '#4b5563';
-              
+                // Turn 'em grey and tell the map they're done
+                enemy.token_color = '#4b5563';
                 combatChannel.postMessage({ 
                     type: 'ENEMY_DIED', 
-                    label: window.currentEnemies[index].name 
+                    label: enemy.name 
                 });
-              } else {
-                // If they somehow heal, turn them back to primary color
-                window.currentEnemies[index].token_color = "var(--primary)";
+            } else {
+                // If they're alive (or just healed), keep the primary color
+                enemy.token_color = "var(--primary)";
             }
         } else {
-            window.currentEnemies[index][stat] = value;
+            // Update other stats (DR, SEQ, etc.)
+            enemy[stat] = value;
         }
+        
         renderRadar();
         syncToFirebase();
     }
